@@ -1,0 +1,33 @@
+{
+  "signal1_ctr_vs_position": [
+    {
+      "position_bucket": "1-3",
+      "avg_ctr": 0.002540460101789199,
+      "n": 747
+    },
+    {
+      "position_bucket": "4-10",
+      "avg_ctr": 0.004346044466498168,
+      "n": 8928
+    },
+    {
+      "position_bucket": "11-20",
+      "avg_ctr": 0.0037579814954485325,
+      "n": 7598
+    },
+    {
+      "position_bucket": "21-50",
+      "avg_ctr": 0.0027727737020386196,
+      "n": 3949
+    },
+    {
+      "position_bucket": "50+",
+      "avg_ctr": 0.00269548652714299,
+      "n": 423
+    }
+  ],
+  "signal2_staleness_vs_decline": [],
+  "rule_threshold_ctr_gap": 0.002994289590582724,
+  "n_flagged_ctr_fix": 5412,
+  "n_total": 21645
+}
