@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scoring Content for Search-Performance Decline — FlyRank ML Internship Capstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #F7F5EF;
+    --ink: #211F1A;
+    --ink-soft: #514C42;
+    --rule: #DCD5C6;
+    --brick: #A8492F;
+    --brick-soft: #E7CBBE;
+    --teal: #1F4A49;
+    --teal-soft: #CFE0DD;
+    --panel: #EFEBE0;
+    --max: 700px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bone);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Fraunces", Georgia, serif;
+    color: var(--ink);
+    line-height: 1.15;
+    font-weight: 600;
+  }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px 120px;
+  }
+
+  header.hero {
+    padding: 88px 0 40px;
+    animation: rise 0.7s ease-out both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .kicker {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+
+  h1.title {
+    font-size: clamp(32px, 5vw, 46px);
+    margin: 0 0 22px;
+    letter-spacing: -0.01em;
+  }
+
+  .meta-line {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .meta-line span + span::before {
+    content: "  ·  ";
+    color: var(--rule);
+  }
+
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+
+  .abstract {
+    font-size: 19px;
+    color: var(--ink);
+  }
+
+  .abstract-label {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--brick);
+    margin: 0 0 10px;
+  }
+
+  section.paper-section {
+    padding: 46px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  section.paper-section:first-of-type {
+    border-top: none;
+    padding-top: 8px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0 0 20px;
+  }
+
+  .section-num {
+    font-family: "Fraunces", serif;
+    font-size: 15px;
+    color: var(--brick);
+    font-variant-numeric: tabular-nums;
+    min-width: 20px;
+  }
+
+  h2.section-title {
+    font-size: 25px;
+    margin: 0;
+  }
+
+  p { margin: 0 0 18px; }
+  p:last-child { margin-bottom: 0; }
+
+  a { color: var(--teal); text-decoration-color: var(--teal-soft); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--teal); }
+
+  ul, ol { padding-left: 22px; margin: 0 0 18px; }
+  li { margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+
+  code, .mono-num {
+    font-family: "Source Serif 4", serif;
+    font-variant-numeric: tabular-nums;
+    background: var(--panel);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 24px;
+    font-size: 16px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  th {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  td.num, th.num { text-align: right; padding-right: 0; font-variant-numeric: tabular-nums; }
+
+  .callout {
+    background: var(--panel);
+    border-left: 3px solid var(--brick);
+    padding: 16px 20px;
+    margin: 0 0 22px;
+    font-size: 16.5px;
+  }
+
+  .callout p:last-child { margin-bottom: 0; }
+
+  .chart-block {
+    margin: 28px 0 30px;
+  }
+
+  .chart-caption {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  .legend {
+    display: flex;
+    gap: 22px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+
+  footer {
+    padding: 46px 0 0;
+    border-top: 1px solid var(--rule);
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    header.hero { animation: none; }
+  }
+
+  @media (max-width: 520px) {
+    body { font-size: 16.5px; }
+    header.hero { padding-top: 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">FlyRank ML Internship — Capstone Paper</p>
+    <h1 class="title">Scoring Content for Search-Performance Decline: A Decision-Support Model from GSC Signals</h1>
+    <p class="meta-line">
+      <span>Lane: Content Opportunity Scoring, GSC sub-lane</span>
+      <span>Feature window Jan–Feb 2026</span>
+      <span>Label window Mar 2026</span>
+    </p>
+  </header>
+
+  <section class="paper-section" id="abstract">
+    <p class="abstract-label">Abstract</p>
+    <p class="abstract">The question this project asks is which content items are declining in organic search performance and should be flagged for refresh, using only signals an analyst could actually see before the outcome is known. The approach treats two months of Google Search Console activity as a feature window, defines decline as a &gt;20% drop in average daily clicks in the following month, and trains a class-weighted RandomForest on five window-Jan–Feb features, benchmarked against a rule-based CTR-gap baseline carried over from earlier project work, with both scored on an identical client-grouped hold-out split. The model reaches an AUC of 0.872 (precision 0.620, recall 0.973), while the baseline rule performs worse than random as a decline signal, at an AUC of 0.165. The model's dominant feature is mechanically related to the label's own definition, and its very high recall is bought with a large number of false positives relative to false negatives — a trade-off this paper states plainly rather than smooths over. Read as a whole, the result is a ranked, decision-support shortlist for human review, not a causal explanation of why any given page's traffic fell.</p>
+  </section>
+
+  <section class="paper-section" id="intro">
+    <div class="section-head"><span class="section-num">1</span><h2 class="section-title">Introduction</h2></div>
+    <p>Content teams sit on far more pages than they have time to revisit, and the question of which ones deserve a refresh first is usually answered by intuition or by whichever page someone happened to notice. An earlier phase of this project (Week 4) built a rule-based score — a gap between a page's actual click-through rate and the average CTR of other pages at the same search position — on the reasoning that pages underperforming their position are the ones worth fixing. That rule was designed for a related but distinct purpose: surfacing CTR problems, not predicting decline. This paper asks a narrower, more falsifiable question directly: can a small set of pre-outcome signals distinguish pages whose clicks are about to drop from pages that will hold steady, and does a learned model do meaningfully better at that specific task than the earlier rule repurposed for it?</p>
+    <p>Everything that follows is framed as decision support. No result here is evidence about how Google's ranking systems behave, and no result establishes that refreshing a flagged page would causally recover its traffic — the data available only supports association between pre-period signals and a subsequent drop, observed after the fact.</p>
+  </section>
+
+  <section class="paper-section" id="data">
+    <div class="section-head"><span class="section-num">2</span><h2 class="section-title">Data</h2></div>
+    <p>All data comes from the <strong>FlyRank/internship-warehouse</strong> release, a gated dataset requiring an authenticated read token. Two tables are used. <code>fact_content_daily_performance</code> is a monthly-partitioned table (covering January 2025 through June 2026) at the grain of one row per report date, client, and content item, carrying GSC clicks, impressions, and average position alongside session counts. <code>dim_content</code>, a 519,606-row content dimension table, was consulted during Week 4 for a possible content-staleness signal based on last-optimized date, but that signal was not carried into the final feature set below.</p>
+    <p>The feature window is January–February 2026 — what would be knowable at a decision point made at the end of February. The label window is March 2026 — the outcome observed after that decision point. Every step below is filtered to <code>client_has_gsc IS TRUE AND gsc_data_available IS TRUE</code>, since decline scoring is only meaningful for content with GSC coverage in the first place.</p>
+    <p>Two tables were deliberately never touched anywhere in feature engineering, label construction, or threshold tuning: <code>fact_content_daily_performance_sample</code>, a sealed test month covering June 2026, and <code>fact_content_query_90d</code>, a fixed 2026-04-02 to 2026-06-30 window that overlaps the sealed month. Both are reserved for a final, one-time evaluation outside the scope of this paper.</p>
+    <p>This paper contains no client names, domains, URLs, search queries, credentials, or raw exports from the warehouse. Every number below is an aggregate statistic — a count, a rate, a model metric — computed across the filtered population, not a record traceable to any individual client or page.</p>
+  </section>
+
+  <section class="paper-section" id="methodology">
+    <div class="section-head"><span class="section-num">3</span><h2 class="section-title">Methodology</h2></div>
+    <p><strong>Guiding assumption.</strong> Every feature and the label itself must be computable from data that would exist at the decision point — nothing from the label window or the sealed tables is allowed to leak into a feature.</p>
+    <p><strong>Label.</strong> For each content item, average daily clicks are computed for Jan–Feb and separately for March. The item is labeled <code>is_declining = 1</code> if its March average is below 80% of its Jan–Feb average, and <code>0</code> otherwise. After filtering and dropping incomplete rows, this yields 21,645 items, split roughly 67% not declining to 33% declining.</p>
+    <p><strong>Features.</strong> All five are computed only from the Jan–Feb window:</p>
+    <ul>
+      <li><strong>avg_daily_clicks</strong> — mean daily GSC clicks, Jan–Feb.</li>
+      <li><strong>avg_daily_impressions</strong> — mean daily GSC impressions, Jan–Feb.</li>
+      <li><strong>avg_position</strong> — mean GSC average position, Jan–Feb.</li>
+      <li><strong>ai_sessions_share</strong> — the share of GA4 sessions attributed to AI-referred traffic, summed over Jan–Feb (zero when the GA4 session sum is zero).</li>
+      <li><strong>early_late_click_delta</strong> — February's average daily clicks minus January's, both fully inside the feature window.</li>
+    </ul>
+    <div class="callout"><p><strong>A definitional note we state rather than hide:</strong> <code>avg_daily_clicks</code> appears on both sides of the fence — it is a feature, and it is also the denominator in the label's own 0.8× threshold. Any model given this feature has partial access to the label's arithmetic, not just a correlate of it. Its outsized importance below should be read with that in mind.</p></div>
+    <p><strong>Baseline.</strong> The Week 4 rule buckets <code>avg_position</code> into five bands (1–3, 4–10, 11–20, 21–50, 50+), computes each band's empirical average CTR as an expected value, and scores each item as <code>ctr_gap = expected_ctr − actual_ctr</code>. Items in the top quartile of <code>ctr_gap</code> are flagged <code>CTR_FIX</code>; the rest are labeled <code>MONITOR</code>. This rule was designed to catch CTR underperformance, not decline — it is repurposed here purely as a comparison point, scored on the same held-out split and the same metrics as the model.</p>
+    <p><strong>Validation design.</strong> A single 80/20 split is drawn with <code>GroupShuffleSplit</code>, grouped by <code>client_hash_id</code>, so that no client appears in both the training and test sets — verified directly by checking for zero overlap between the two client sets. A plain logistic regression tried earlier in the project (Week 3) produced recall of only 0.013 on this imbalanced label, which motivated moving to a class-weighted RandomForest instead.</p>
+    <p><strong>Leakage checks.</strong> Beyond the client-grouped split, the sealed tables are excluded from every stage — not just the final evaluation — because both overlap the sealed June 2026 month and using them for feature engineering, labeling, or threshold tuning would let information about the eventual test period leak into decisions made now.</p>
+  </section>
+
+  <section class="paper-section" id="results">
+    <div class="section-head"><span class="section-num">4</span><h2 class="section-title">Results</h2></div>
+    <p>Both the baseline and the model — a <code>RandomForestClassifier</code> with 300 trees, max depth 6, and balanced class weights — were scored on the identical held-out test split.</p>
+    <table>
+      <thead><tr><th>Metric</th><th class="num">Baseline (ctr_gap rule)</th><th class="num">Model (RandomForest)</th></tr></thead>
+      <tbody>
+        <tr><td>AUC</td><td class="num">0.165</td><td class="num">0.872</td></tr>
+        <tr><td>Precision</td><td class="num">0.053</td><td class="num">0.620</td></tr>
+        <tr><td>Recall</td><td class="num">0.050</td><td class="num">0.973</td></tr>
+      </tbody>
+    </table>
+
+    <div class="chart-block">
+      <div class="legend">
+        <span class="legend-item"><span class="swatch" style="background:var(--brick-soft)"></span>Baseline</span>
+        <span class="legend-item"><span class="swatch" style="background:var(--teal)"></span>Model</span>
+      </div>
+      <svg viewBox="0 0 560 210" width="100%" role="img" aria-label="Bar chart comparing baseline and model on AUC, precision, and recall">
+        <line x1="20" y1="190" x2="540" y2="190" stroke="#B7AF9C" stroke-width="1"/>
+        <!-- AUC -->
+        <rect x="60" y="165.3" width="26" height="24.7" fill="var(--brick-soft)"/>
+        <rect x="90" y="59.2" width="26" height="130.8" fill="var(--teal)"/>
+        <text x="88" y="204" text-anchor="middle" font-family="Source Serif 4, serif" font-size="14" fill="#514C42">AUC</text>
+        <text x="73" y="159" text-anchor="middle" font-family="Source Serif 4, serif" font-size="12.5" fill="#514C42">0.165</text>
+        <text x="103" y="53" text-anchor="middle" font-family="Source Serif 4, serif" font-size="12.5" fill="#1F4A49">0.872</text>
+        <!-- Precision -->
+        <rect x="214" y="182.1" width="26" height="7.9" fill="var(--brick-soft)"/>
+        <rect x="244" y="97" width="26" height="93" fill="var(--teal)"/>
+        <text x="242" y="204" text-anchor="middle" font-family="Source Serif 4, serif" font-size="14" fill="#514C42">Precision</text>
+        <text x="227" y="176" text-anchor="middle" font-family="Source Serif 4, serif" font-size="12.5" fill="#514C42">0.053</text>
+        <text x="257" y="91" text-anchor="middle" font-family="Source Serif 4, serif" font-size="12.5" fill="#1F4A49">0.620</text>
+        <!-- Recall -->
+        <rect x="368" y="182.5" width="26" height="7.5" fill="var(--brick-soft)"/>
+        <rect x="398" y="44.1" width="26" height="145.9" fill="var(--teal)"/>
+        <text x="396" y="204" text-anchor="middle" font-family="Source Serif 4, serif" font-size="14" fill="#514C42">Recall</text>
+        <text x="381" y="176" text-anchor="middle" font-family="Source Serif 4, serif" font-size="12.5" fill="#514C42">0.050</text>
+        <text x="411" y="38" text-anchor="middle" font-family="Source Serif 4, serif" font-size="12.5" fill="#1F4A49">0.973</text>
+      </svg>
+      <p class="chart-caption">Same held-out, client-grouped test split for both. Baseline AUC below 0.5 means ctr_gap moves in the wrong direction as a decline signal.</p>
+    </div>
+
+    <div class="chart-block">
+      <svg viewBox="0 0 560 190" width="100%" role="img" aria-label="Horizontal bar chart of permutation importance by feature">
+        <text x="0" y="18" font-family="Source Serif 4, serif" font-size="14.5" fill="#211F1A">avg_daily_clicks</text>
+        <rect x="180" y="6" width="380" height="18" fill="var(--brick)"/>
+        <text x="565" y="20" font-family="Source Serif 4, serif" font-size="13.5" fill="#514C42" text-anchor="start" transform="translate(-14,0)">0.254</text>
+
+        <text x="0" y="54" font-family="Source Serif 4, serif" font-size="14.5" fill="#211F1A">avg_daily_impressions</text>
+        <rect x="180" y="42" width="63" height="18" fill="var(--teal)"/>
+        <text x="253" y="56" font-family="Source Serif 4, serif" font-size="13.5" fill="#514C42">0.042</text>
+
+        <text x="0" y="90" font-family="Source Serif 4, serif" font-size="14.5" fill="#211F1A">early_late_click_delta</text>
+        <rect x="180" y="78" width="21" height="18" fill="var(--teal)"/>
+        <text x="211" y="92" font-family="Source Serif 4, serif" font-size="13.5" fill="#514C42">0.014</text>
+
+        <text x="0" y="126" font-family="Source Serif 4, serif" font-size="14.5" fill="#211F1A">avg_position</text>
+        <rect x="180" y="114" width="11" height="18" fill="var(--teal)"/>
+        <text x="201" y="128" font-family="Source Serif 4, serif" font-size="13.5" fill="#514C42">0.007</text>
+
+        <text x="0" y="162" font-family="Source Serif 4, serif" font-size="14.5" fill="#211F1A">ai_sessions_share</text>
+        <rect x="180" y="150" width="3" height="18" fill="var(--teal)"/>
+        <text x="193" y="164" font-family="Source Serif 4, serif" font-size="13.5" fill="#514C42">0.0002</text>
+      </svg>
+      <p class="chart-caption">Permutation importance, ROC-AUC scoring, 10 repeats. The leading bar is shaded differently as a reminder of the definitional overlap noted in §3.</p>
+    </div>
+
+    <p><strong>Error profile.</strong> On the test split, the model produced 513 false positives against only 23 false negatives. The false negatives are consistently low-volume, borderline items — mean <code>avg_daily_clicks</code> around 0.29, mean impressions around 90, with predicted probabilities clustered between 0.38 and 0.50, just under the decision cutoff. The model's high recall is bought at the cost of precision: it flags decline liberally, and roughly 4 in 10 flagged items in this split did not, in fact, decline.</p>
+  </section>
+
+  <section class="paper-section" id="limitations">
+    <div class="section-head"><span class="section-num">5</span><h2 class="section-title">Limitations &amp; honest framing</h2></div>
+    <ul>
+      <li><strong>The baseline is a negative finding, stated plainly.</strong> <code>ctr_gap</code> was built to catch CTR underperformance relative to position, and it does that job in a different context — repurposed as a decline predictor, it performs worse than random (AUC 0.165). That is a real result about this specific rule's applicability, not a flaw to explain away.</li>
+      <li><strong>The model's top feature is partly definitional.</strong> Because <code>avg_daily_clicks</code> is also the denominator inside the label's 0.8× threshold, some of its importance reflects that mechanical link rather than independent predictive signal. The other four features, taken alone, carry far less weight.</li>
+      <li><strong>Recall is bought with false positives.</strong> A 0.973 recall alongside 0.620 precision means the model is tuned to rarely miss a true decline, at the cost of over-flagging. Any downstream use should expect a meaningful share of flagged items to be false alarms.</li>
+      <li><strong>Selection bias from the GSC filter.</strong> Every result here describes only the subset of content with <code>client_has_gsc</code> and <code>gsc_data_available</code> both true. Nothing here has been validated against, or is claimed to generalize to, content outside that instrumented population.</li>
+      <li><strong>No causal claims.</strong> Nothing in this paper establishes how Google's ranking systems behave, or that refreshing a flagged page would causally recover its traffic. The signal is associative: a set of pre-period measurements correlated with a subsequent drop, observed after the fact.</li>
+    </ul>
+  </section>
+
+  <section class="paper-section" id="recommendations">
+    <div class="section-head"><span class="section-num">6</span><h2 class="section-title">Ranked recommendations</h2></div>
+    <p>Read as an action playbook rather than a pass/fail filter:</p>
+    <ol>
+      <li>Use the model's predicted probability as a ranking, not a binary decision — work down the sorted list rather than treating the 0.5 cutoff as a hard gate.</li>
+      <li>Send items with predicted probability at or above roughly 0.7 to the front of the refresh queue; these carry the model's strongest signal.</li>
+      <li>Route items in the 0.5–0.7 band through a lighter human review step before committing refresh resources, since precision at the standard cutoff is 0.620 — a meaningful share of this band will be false positives.</li>
+      <li>Add a manual spot-check for low-volume items scoring 0.38–0.50, since this is exactly where the model's false negatives cluster and it is likely to under-flag real decline there.</li>
+      <li>Restrict deployment to the GSC-instrumented population this model was validated on; re-validate separately before applying it to content without GSC coverage.</li>
+      <li>Hold the sealed June 2026 evaluation tables in reserve for a single, final generalization check at the end of the project, rather than peeking at them for tuning.</li>
+    </ol>
+  </section>
+
+  <section class="paper-section" id="reproducibility">
+    <div class="section-head"><span class="section-num">7</span><h2 class="section-title">Reproducibility</h2></div>
+    <p>The full pipeline — DuckDB aggregation over the raw warehouse partitions, label and feature construction, the baseline rule, the RandomForest training and evaluation, and the permutation-importance and error-profile analysis — is in the capstone notebook in this repository: <a href="https://github.com/zaidbinnaveed/FlyRank-ML-Internship/blob/main/work/notebooks/capstone.ipynb">work/notebooks/capstone.ipynb</a>. Earlier weekly notebooks referenced throughout this paper (the Week 3 logistic-regression baseline, the Week 4 CTR-gap rule) live alongside it under <a href="https://github.com/zaidbinnaveed/FlyRank-ML-Internship/tree/main/work/notebooks">work/notebooks/</a> in the same repository.</p>
+  </section>
+
+  <footer>
+    <p>Built on the <a href="https://flyrank.ai">FlyRank ML Internship dataset</a>.</p>
+  </footer>
+
+</div>
+</body>
+</html>
