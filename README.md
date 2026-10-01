@@ -1,34 +1,73 @@
-# FlyRank ML Internship — Content Opportunity Scoring Capstone
+# FlyRank ML Internship — Content Opportunity Scoring
 
-Refresh / Content Opportunity Scoring (GSC search performance sub-lane).
+A reproducible machine-learning capstone that ranks existing content for editorial refresh review using anonymized search and engagement signals.
 
-## Repo structure
+The system is decision support: it identifies review candidates and explains the signals behind each recommendation. It does **not** predict Google's algorithm, prove that a refresh will cause traffic growth, or automate publishing.
 
+## Verified result
+
+The committed model report is generated from the bundled 30,000-row anonymized dataset using a client-group holdout.
+
+| Model | ROC AUC | Average precision | Precision@50 | Recall | F1 |
+|---|---:|---:|---:|---:|---:|
+| Random forest | 0.750 | 0.618 | **0.740** | 0.744 | 0.640 |
+| Decision tree | 0.742 | 0.575 | 0.540 | 0.716 | 0.634 |
+| Logistic regression | 0.700 | 0.522 | 0.400 | 0.567 | 0.566 |
+| Transparent rule baseline | 0.627 | 0.468 | 0.240 | — | — |
+
+The random forest is selected by `precision_at_50`, matching the operational goal of giving reviewers a useful top-of-queue shortlist. See [the full generated model report](outputs/model_report.md).
+
+## Pipeline
+
+```text
+anonymized input
+  → schema and leakage checks
+  → transparent feature preparation
+  → rule baseline
+  → grouped model validation
+  → ranked opportunity score
+  → reason codes and editorial action
+  → CSV queue, charts, and report
 ```
-work/notebooks/          weekly assignment notebooks + capstone.ipynb
-docs/index.html          deployed capstone research paper (GitHub Pages source)
-submission/paper_url.txt deployed paper's direct URL (single line)
+
+## Run the reproducible pipeline
+
+```bash
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/run_all.py
 ```
 
-Drop your existing Week 1–4 notebooks into `work/notebooks/` alongside
-`capstone.ipynb` if they aren't there already — this repo currently ships the
-capstone notebook only, since that is what this task built end to end.
+The pipeline reads `data/raw/content_refresh_anonymized.csv` and regenerates the artifacts under `outputs/`.
 
-## Deployment (GitHub Pages)
+## Repository map
 
-This repo is set up to serve the paper straight from `/docs` on `main`:
+```text
+data/raw/                    anonymized starter data
+notebooks/                   guided analysis notebooks
+scripts/                     reproducible feature, model, and report pipeline
+outputs/                     generated model report, queue sample, and charts
+docs/                        research paper and supporting guides
+work/                        weekly internship submissions and capstone notebook
+skills/                      focused workflow instructions used during the track
+submission/paper_url.txt     deployed paper URL
+```
 
-1. Push this repo content to `main` on `github.com/zaidbinnaveed/FlyRank-ML-Internship`.
-2. Settings → Pages → Source: **Deploy from a branch** → Branch: `main`, Folder: `/docs`.
-3. Save. The paper goes live at:
-   `https://zaidbinnaveed.github.io/FlyRank-ML-Internship/`
+## Data-safety rules
 
-That URL is also recorded in `submission/paper_url.txt`.
+The public dataset removes client names, domains, URLs, titles, keywords, and raw queries. Hashed identifiers remain pseudonymous and are used only for grouping, joining, and validation—not as model features.
 
-## Data access
+Read [DATA_USE.md](DATA_USE.md) before replacing or extending the data. Never commit private client data or paste it into unapproved third-party services.
 
-The capstone notebook reads directly from the gated Hugging Face dataset
-`FlyRank/internship-warehouse`. Running it requires a Hugging Face account
-with read access to that dataset and an active login
-(`huggingface-cli login` or an `HF_TOKEN` environment variable) before
-launching Jupyter.
+## Interpretation
+
+The safest use of the output is human review:
+
+1. inspect high-confidence rows;
+2. verify the page and editorial context;
+3. treat reason codes as review prompts;
+4. measure post-refresh outcomes separately.
+
+The model observes association in historical signals. It does not establish causal refresh impact.
